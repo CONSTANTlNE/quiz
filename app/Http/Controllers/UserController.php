@@ -106,7 +106,12 @@ class UserController extends Controller
     public function userTakeTest(Request $request, $id)
     {
 
-        $testUser=User::find($request->user_id);
+
+        if($request->user_id!==null){
+            $testUser=User::find($request->user_id);
+        } else {
+            $testUser=User::find(auth()->user()->id);
+        }
 
         $userassigned = TestUserAssign::where('user_id', $testUser->id)
             ->where('test_id', $id)

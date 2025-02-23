@@ -105,7 +105,10 @@ class UserController extends Controller
     // returns view when user wants to take test OR test is already taken and user wants to view result
     public function userTakeTest(Request $request, $id)
     {
-        $userassigned = TestUserAssign::where('user_id', auth()->user()->id)
+
+        $testUser=User::find($request->user_id);
+
+        $userassigned = TestUserAssign::where('user_id', $testUser->id)
             ->where('test_id', $id)
             ->first();
 
@@ -113,20 +116,20 @@ class UserController extends Controller
         if ($userassigned && $userassigned->took_test === 1) {
 
             $useranswers = UserAnswer::where('test_id', $id)
-                ->where('user_id', auth()->user()->id)
+                ->where('user_id', $testUser->id)
                 ->get();
 
             $userscore  = $useranswers->where('correct',1)
-                ->where('user_id', auth()->user()->id)
+                ->where('user_id',  $testUser->id)
                 ->sum('score');
 
             $totalscore  = $useranswers
-                ->where('user_id', auth()->user()->id)
+                ->where('user_id',  $testUser->id)
                 ->sum('score');
 
             $test = Test::with('questions.answers')->find($id);
 
-            return view('users.take_test', compact('test', 'useranswers', 'totalscore', 'userscore'));
+            return view('users.take_test', compact('test', 'useranswers', 'totalscore', 'userscore','testUser'));
         }
 
         if ($userassigned) {

@@ -20,6 +20,11 @@
                     <div class="preview-component">
                         <div class="flex flex-col pb-5 mb-5 border-b border-dashed border-slate-300/70 sm:flex-row sm:items-center justify-center">
                             <div class="text-[0.94rem] font-medium">
+
+                                User:
+                                <span style="color:red">
+                                    {{$testUser->name}}
+                                </span>
                                 Total Score :
                                 <span style="color:red">
                                     {{$totalscore}}
@@ -52,9 +57,9 @@
                                         <p>Score : {{$question->score}}</p>
                                         {{--  If question is a free answer and if admin already checked it will show correct or wrong--}}
                                         @if(isset($useranswers) && $question->type==='free' )
-                                            @if($useranswers->where('test_question_id', $question->id)->where('user_id', auth()->user()->id)->first()->correct===1)
+                                            @if($useranswers->where('test_question_id', $question->id)->where('user_id', $testUser->id)->first()->correct===1)
                                                 <p style="color:green">Correct</p>
-                                            @elseif($useranswers->where('test_question_id', $question->id)->where('user_id', auth()->user()->id)->first()->correct===null)
+                                            @elseif($useranswers->where('test_question_id', $question->id)->where('user_id', $testUser->id)->first()->correct===null)
                                                 <p style="color:black">Not Checked</p>
                                             @else
                                                 <p style="color:red">Wrong</p>

@@ -39,6 +39,7 @@
                 <tbody>
 
                 @foreach($test_assignments as $index=>  $assignment)
+{{--                    @dd($assignment)--}}
                     <tr class="[&amp;_td]:last:border-b-0">
 
                         <td class="px-5 border-b dark:border-darkmode-300 w-80 border-dashed py-4 dark:bg-darkmode-600 text-center">
@@ -90,7 +91,7 @@
                                          data-state="leave" style="display: none;">
                                         <div class="dropdown-content rounded-md border-transparent bg-white p-2 shadow-[0px_3px_10px_#00000017] dark:border-transparent dark:bg-darkmode-600 w-40">
                                             {{-- ======================= edit test ======================--}}
-                                            <a href="{{route('user.take.test',$assignment->test->id)}}"
+                                            <a href="{{route('user.take.test',['id'=>$assignment->test->id, 'user_id'=>$assignment->user_id])}}"
                                                class="cursor-pointer flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-slate-200/60 dark:bg-darkmode-600 dark:hover:bg-darkmode-400 dropdown-item">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                      viewBox="0 0 24 24" fill="none" stroke="currentColor"
